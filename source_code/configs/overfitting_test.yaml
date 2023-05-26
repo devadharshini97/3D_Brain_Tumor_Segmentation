@@ -1,0 +1,60 @@
+save_folder: /content/Experiemnts/test #Experiments/test
+
+Training_Dataset:
+  #patient_data_list_path: "dataset/lists/sample_100.txt"
+  patient_data_list_path: "dataset/lists/sample_100.txt"
+  no_classes: 4
+  src_folder: "/content/drive/MyDrive/ECE542/Brain_Tumor_segmentaion3D"
+
+Validation_Dataset:
+  #patient_data_list_path: "dataset/lists/sample_100.txt"
+  patient_data_list_path: "dataset/lists/sample_100.txt"
+  no_classes: 4
+  src_folder: "/content/drive/MyDrive/ECE542/Brain_Tumor_segmentaion3D"
+
+Test_Dataset:
+  #patient_data_list_path: "dataset/lists/sample_100.txt"
+  patient_data_list_path: "dataset/lists/sample_100.txt"
+  no_classes: 4
+  src_folder: "/content/drive/MyDrive/ECE542/Brain_Tumor_segmentaion3D"
+
+Model:
+  in_channels: 3
+  out_channels: 4
+  img_size: [128, 128, 144]
+  feature_size: 16
+  hidden_size: 768
+  mlp_dim: 3072
+  num_heads: 12
+  pos_embed: "perceptron"
+  norm_name: "instance"
+  conv_block: True
+  res_block: True
+  dropout_rate: 0
+
+Trainer:
+  number_of_epochs: 100
+  loss:
+    path: monai.losses.DiceLoss 
+    params:
+      include_background: True
+      to_onehot_y: True
+      sigmoid: False
+      softmax: True #False
+      #other_act: None
+      squared_pred: False
+      jaccard: False
+      reduction: 'mean'
+      smooth_nr: 1e-05
+      smooth_dr: 1e-05
+      batch: False
+      #ce_weight: None
+      #lambda_dice: 1.0
+      #lambda_ce: 1.0
+      
+  optimizer:
+    path: torch.optim.AdamW
+    params:
+        lr: 0.001
+
+
